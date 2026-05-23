@@ -8,7 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PublicLayout } from "@/components/public-layout";
 import { supabase } from "@/integrations/supabase/client";
-import { STATUS_FLOW, STATUS_LABELS, SERVICE_LABELS, statusBadgeClass } from "@/lib/shipment-utils";
+import { STATUS_FLOW, STATUS_LABELS, SERVICE_LABELS, statusBadgeClass, getTimelineStage } from "@/lib/shipment-utils";
 import { format } from "date-fns";
 
 const searchSchema = z.object({ n: z.string().optional() });
@@ -68,7 +68,7 @@ function TrackingPage() {
     navigate({ to: "/tracking", search: { n: input.trim().toUpperCase() } });
   };
 
-  const statusIndex = shipment ? Math.max(0, STATUS_FLOW.indexOf(shipment.status as typeof STATUS_FLOW[number])) : 0;
+  const statusIndex = shipment ? getTimelineStage(shipment.status) : 1;
 
   return (
     <PublicLayout>

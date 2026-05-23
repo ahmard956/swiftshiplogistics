@@ -46,15 +46,15 @@ function NewShipment() {
       weight: parsed.data.weight,
       customer_email: parsed.data.customer_email || null,
       service_type: parsed.data.service_type,
-      status: "order_received",
+      status: "label_created",
       price,
       current_location: parsed.data.from_address,
       estimated_delivery: eta.toISOString(),
       tracking_events: [{
-        status: "order_received",
+        status: "label_created",
         location: parsed.data.from_address,
         timestamp: new Date().toISOString(),
-        description: "Package received at origin facility",
+        description: "Shipping label created, awaiting pickup",
       }],
     });
     setSaving(false);

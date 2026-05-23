@@ -122,6 +122,20 @@ export type Database = {
         }
         Returns: boolean
       }
+      track_shipment: {
+        Args: { _tracking_number: string }
+        Returns: {
+          current_location: string
+          estimated_delivery: string
+          from_city: string
+          service_type: string
+          status: string
+          to_city: string
+          tracking_events: Json
+          tracking_number: string
+          weight: number
+        }[]
+      }
     }
     Enums: {
       app_role: "admin" | "user"

@@ -132,8 +132,8 @@ function TrackingPage() {
               </div>
 
               <div className="mt-6 space-y-4 text-sm">
-                <Row icon={MapPin} label="From" value={shipment.from_address} />
-                <Row icon={MapPin} label="To" value={shipment.to_address} />
+                <Row icon={MapPin} label="From" value={shipment.from_city} />
+                <Row icon={MapPin} label="To" value={shipment.to_city} />
                 <Row icon={Truck} label="Current location" value={shipment.current_location ?? "—"} />
                 <Row icon={Clock} label="Est. delivery" value={shipment.estimated_delivery ? format(new Date(shipment.estimated_delivery), "PPp") : "—"} />
                 <Row icon={Package} label="Service" value={SERVICE_LABELS[shipment.service_type] ?? shipment.service_type} />

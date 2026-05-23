@@ -45,9 +45,6 @@ export function SiteHeader() {
           <Button variant="ghost" size="icon" onClick={toggle} aria-label="Toggle theme">
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
-          <Link to="/admin" className="hidden sm:block">
-            <Button variant="default" size="sm">Admin</Button>
-          </Link>
           <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setOpen(!open)} aria-label="Menu">
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
@@ -69,9 +66,6 @@ export function SiteHeader() {
                 {n.label}
               </Link>
             ))}
-            <Link to="/admin" onClick={() => setOpen(false)} className="py-2.5 text-sm font-medium text-primary">
-              Admin Dashboard
-            </Link>
           </nav>
         </div>
       )}

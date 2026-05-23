@@ -68,7 +68,7 @@ function TrackingPage() {
     navigate({ to: "/tracking", search: { n: input.trim().toUpperCase() } });
   };
 
-  const statusIndex = shipment ? Math.max(0, STATUS_FLOW.indexOf(shipment.status as typeof STATUS_FLOW[number])) : 0;
+  const statusIndex = shipment ? getTimelineStage(shipment.status) : 1;
 
   return (
     <PublicLayout>

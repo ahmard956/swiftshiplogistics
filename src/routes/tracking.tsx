@@ -28,8 +28,8 @@ type Shipment = {
   tracking_number: string;
   status: string;
   service_type: string;
-  from_address: string;
-  to_address: string;
+  from_city: string;
+  to_city: string;
   current_location: string | null;
   estimated_delivery: string | null;
   weight: number;
@@ -54,14 +54,12 @@ function TrackingPage() {
     setError(null);
     setShipment(null);
     const { data, error: e } = await supabase
-      .from("shipments")
-      .select("*")
-      .eq("tracking_number", tn.toUpperCase())
-      .maybeSingle();
+      .rpc("track_shipment", { _tracking_number: tn.toUpperCase() });
     setLoading(false);
     if (e) { setError("Something went wrong. Please try again."); return; }
-    if (!data) { setError(`No shipment found for "${tn.toUpperCase()}". Please check the number and try again.`); return; }
-    setShipment(data as unknown as Shipment);
+    const row = Array.isArray(data) ? data[0] : data;
+    if (!row) { setError(`No shipment found for "${tn.toUpperCase()}". Please check the number and try again.`); return; }
+    setShipment(row as unknown as Shipment);
   }
 
   const onSubmit = (e: React.FormEvent) => {

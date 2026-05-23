@@ -8,7 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PublicLayout } from "@/components/public-layout";
 import { supabase } from "@/integrations/supabase/client";
-import { STATUS_FLOW, STATUS_LABELS, SERVICE_LABELS, statusBadgeClass } from "@/lib/shipment-utils";
+import { STATUS_FLOW, STATUS_LABELS, SERVICE_LABELS, statusBadgeClass, getTimelineStage } from "@/lib/shipment-utils";
 import { format } from "date-fns";
 
 const searchSchema = z.object({ n: z.string().optional() });

@@ -24,8 +24,10 @@ function AdminDashboard() {
       if (!data) return;
       const today = new Date(); today.setHours(0, 0, 0, 0);
       const s: Stats = {
-        active: data.filter((d) => d.status !== "delivered").length,
-        inTransit: data.filter((d) => d.status === "in_transit" || d.status === "out_for_delivery").length,
+        active: data.filter((d) => d.status !== "delivered" && d.status !== "returned_to_sender").length,
+        inTransit: data.filter((d) =>
+          ["in_transit", "arrived_hub", "departed_hub", "customs", "arrived_destination", "out_for_delivery", "delivery_attempted"].includes(d.status)
+        ).length,
         deliveredToday: data.filter((d) => d.status === "delivered" && new Date(d.updated_at) >= today).length,
         revenue: data.reduce((sum, d) => sum + Number(d.price || 0), 0),
       };

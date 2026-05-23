@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
-import { STATUS_LABELS, STATUS_FLOW, statusBadgeClass } from "@/lib/shipment-utils";
+import { STATUS_LABELS, STATUS_FLOW, ALL_STATUSES, statusBadgeClass } from "@/lib/shipment-utils";
 import { format } from "date-fns";
 
 export const Route = createFileRoute("/admin/shipments")({
@@ -78,7 +78,7 @@ function ShipmentsList() {
             <SelectTrigger className="w-full sm:w-56"><SelectValue /></SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All statuses</SelectItem>
-              {STATUS_FLOW.map((s) => <SelectItem key={s} value={s}>{STATUS_LABELS[s]}</SelectItem>)}
+              {ALL_STATUSES.map((s) => <SelectItem key={s} value={s}>{STATUS_LABELS[s]}</SelectItem>)}
             </SelectContent>
           </Select>
         </div>
@@ -159,7 +159,7 @@ function EditDialog({ row, onClose }: { row: Row | null; onClose: () => void }) 
             <Label>Status</Label>
             <Select value={status} onValueChange={setStatus}>
               <SelectTrigger><SelectValue /></SelectTrigger>
-              <SelectContent>{STATUS_FLOW.map((s) => <SelectItem key={s} value={s}>{STATUS_LABELS[s]}</SelectItem>)}</SelectContent>
+              <SelectContent>{ALL_STATUSES.map((s) => <SelectItem key={s} value={s}>{STATUS_LABELS[s]}</SelectItem>)}</SelectContent>
             </Select>
           </div>
           <div className="space-y-2">

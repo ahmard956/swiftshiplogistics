@@ -39,7 +39,7 @@ function NewShipment() {
     const tn = generateTrackingNumber();
     const price = calculateQuote(parsed.data.weight, parsed.data.service_type === "international");
     const eta = new Date(); eta.setDate(eta.getDate() + (parsed.data.service_type === "international" ? 5 : 3));
-    const { error } = await supabase.from("shipments").insert({
+    const { data: inserted, error } = await supabase.from("shipments").insert({
       tracking_number: tn,
       from_address: parsed.data.from_address,
       to_address: parsed.data.to_address,
@@ -50,13 +50,16 @@ function NewShipment() {
       price,
       current_location: parsed.data.from_address,
       estimated_delivery: eta.toISOString(),
-      tracking_events: [{
+      tracking_events: [],
+    }).select("id").single();
+    if (!error && inserted) {
+      await supabase.from("tracking_events").insert({
+        shipment_id: inserted.id,
         status: "label_created",
         location: parsed.data.from_address,
-        timestamp: new Date().toISOString(),
         description: "Shipping label created, awaiting pickup",
-      }],
-    });
+      });
+    }
     setSaving(false);
     if (error) return toast.error(error.message);
     toast.success(`Created shipment ${tn}`);

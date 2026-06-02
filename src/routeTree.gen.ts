@@ -22,6 +22,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminTrackingRouteImport } from './routes/admin.tracking'
 import { Route as AdminShipmentsRouteImport } from './routes/admin.shipments'
 import { Route as AdminNewRouteImport } from './routes/admin.new'
+import { Route as AdminCustomersRouteImport } from './routes/admin.customers'
 
 const TrackingRoute = TrackingRouteImport.update({
   id: '/tracking',
@@ -88,6 +89,11 @@ const AdminNewRoute = AdminNewRouteImport.update({
   path: '/new',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminCustomersRoute = AdminCustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tracking': typeof TrackingRoute
+  '/admin/customers': typeof AdminCustomersRoute
   '/admin/new': typeof AdminNewRoute
   '/admin/shipments': typeof AdminShipmentsRoute
   '/admin/tracking': typeof AdminTrackingRoute
@@ -113,6 +120,7 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tracking': typeof TrackingRoute
+  '/admin/customers': typeof AdminCustomersRoute
   '/admin/new': typeof AdminNewRoute
   '/admin/shipments': typeof AdminShipmentsRoute
   '/admin/tracking': typeof AdminTrackingRoute
@@ -129,6 +137,7 @@ export interface FileRoutesById {
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tracking': typeof TrackingRoute
+  '/admin/customers': typeof AdminCustomersRoute
   '/admin/new': typeof AdminNewRoute
   '/admin/shipments': typeof AdminShipmentsRoute
   '/admin/tracking': typeof AdminTrackingRoute
@@ -146,6 +155,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/sitemap.xml'
     | '/tracking'
+    | '/admin/customers'
     | '/admin/new'
     | '/admin/shipments'
     | '/admin/tracking'
@@ -160,6 +170,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/sitemap.xml'
     | '/tracking'
+    | '/admin/customers'
     | '/admin/new'
     | '/admin/shipments'
     | '/admin/tracking'
@@ -175,6 +186,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/sitemap.xml'
     | '/tracking'
+    | '/admin/customers'
     | '/admin/new'
     | '/admin/shipments'
     | '/admin/tracking'
@@ -286,10 +298,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminNewRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/customers': {
+      id: '/admin/customers'
+      path: '/customers'
+      fullPath: '/admin/customers'
+      preLoaderRoute: typeof AdminCustomersRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
 interface AdminRouteChildren {
+  AdminCustomersRoute: typeof AdminCustomersRoute
   AdminNewRoute: typeof AdminNewRoute
   AdminShipmentsRoute: typeof AdminShipmentsRoute
   AdminTrackingRoute: typeof AdminTrackingRoute
@@ -297,6 +317,7 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminCustomersRoute: AdminCustomersRoute,
   AdminNewRoute: AdminNewRoute,
   AdminShipmentsRoute: AdminShipmentsRoute,
   AdminTrackingRoute: AdminTrackingRoute,

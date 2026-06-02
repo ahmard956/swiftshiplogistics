@@ -35,7 +35,7 @@ export function AdminShell() {
     navigate({ to: "/" });
   };
 
-  if (loading || !user) {
+  if (loading || !user || !isAdmin) {
     return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Loading…</div>;
   }
 

@@ -137,15 +137,17 @@ function EditDialog({ row, onClose }: { row: Row | null; onClose: () => void }) 
   const save = async () => {
     if (!row) return;
     setSaving(true);
-    const newEvent = {
-      status, location: loc || row.current_location || "—",
-      timestamp: new Date().toISOString(),
-      description: desc || `Status updated to ${STATUS_LABELS[status] ?? status}`,
-    };
-    const events = [...(row.tracking_events ?? []), newEvent];
     const { error } = await supabase.from("shipments").update({
-      status, current_location: loc || row.current_location, tracking_events: events,
+      status, current_location: loc || row.current_location,
     }).eq("id", row.id);
+    if (!error) {
+      await supabase.from("tracking_events").insert({
+        shipment_id: row.id,
+        status,
+        location: loc || row.current_location || null,
+        description: desc || `Status updated to ${STATUS_LABELS[status] ?? status}`,
+      });
+    }
     setSaving(false);
     if (error) toast.error(error.message); else { toast.success("Shipment updated"); onClose(); }
   };

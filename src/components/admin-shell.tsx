@@ -1,6 +1,6 @@
 import { Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Package, LayoutDashboard, Truck, PlusCircle, LogOut, Menu, X } from "lucide-react";
+import { Package, LayoutDashboard, Truck, PlusCircle, LogOut, Menu, X, MapPin, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils";
 const nav = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/admin/shipments", label: "Shipments", icon: Truck },
+  { to: "/admin/tracking", label: "Tracking", icon: MapPin },
+  { to: "/admin/customers", label: "Customers", icon: Users },
   { to: "/admin/new", label: "New Shipment", icon: PlusCircle },
 ];
 

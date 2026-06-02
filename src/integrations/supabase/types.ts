@@ -89,6 +89,44 @@ export type Database = {
         }
         Relationships: []
       }
+      tracking_events: {
+        Row: {
+          created_at: string
+          description: string | null
+          event_at: string
+          id: string
+          location: string | null
+          shipment_id: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          event_at?: string
+          id?: string
+          location?: string | null
+          shipment_id: string
+          status: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          event_at?: string
+          id?: string
+          location?: string | null
+          shipment_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tracking_events_shipment_id_fkey"
+            columns: ["shipment_id"]
+            isOneToOne: false
+            referencedRelation: "shipments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string

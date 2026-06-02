@@ -19,6 +19,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminTrackingRouteImport } from './routes/admin.tracking'
 import { Route as AdminShipmentsRouteImport } from './routes/admin.shipments'
 import { Route as AdminNewRouteImport } from './routes/admin.new'
 
@@ -72,6 +73,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminTrackingRoute = AdminTrackingRouteImport.update({
+  id: '/tracking',
+  path: '/tracking',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminShipmentsRoute = AdminShipmentsRouteImport.update({
   id: '/shipments',
   path: '/shipments',
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/tracking': typeof TrackingRoute
   '/admin/new': typeof AdminNewRoute
   '/admin/shipments': typeof AdminShipmentsRoute
+  '/admin/tracking': typeof AdminTrackingRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/tracking': typeof TrackingRoute
   '/admin/new': typeof AdminNewRoute
   '/admin/shipments': typeof AdminShipmentsRoute
+  '/admin/tracking': typeof AdminTrackingRoute
   '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   '/tracking': typeof TrackingRoute
   '/admin/new': typeof AdminNewRoute
   '/admin/shipments': typeof AdminShipmentsRoute
+  '/admin/tracking': typeof AdminTrackingRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
     | '/tracking'
     | '/admin/new'
     | '/admin/shipments'
+    | '/admin/tracking'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
     | '/tracking'
     | '/admin/new'
     | '/admin/shipments'
+    | '/admin/tracking'
     | '/admin'
   id:
     | '__root__'
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/tracking'
     | '/admin/new'
     | '/admin/shipments'
+    | '/admin/tracking'
     | '/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -253,6 +265,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/tracking': {
+      id: '/admin/tracking'
+      path: '/tracking'
+      fullPath: '/admin/tracking'
+      preLoaderRoute: typeof AdminTrackingRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/shipments': {
       id: '/admin/shipments'
       path: '/shipments'
@@ -273,12 +292,14 @@ declare module '@tanstack/react-router' {
 interface AdminRouteChildren {
   AdminNewRoute: typeof AdminNewRoute
   AdminShipmentsRoute: typeof AdminShipmentsRoute
+  AdminTrackingRoute: typeof AdminTrackingRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminNewRoute: AdminNewRoute,
   AdminShipmentsRoute: AdminShipmentsRoute,
+  AdminTrackingRoute: AdminTrackingRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
@@ -298,3 +319,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

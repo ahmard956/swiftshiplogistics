@@ -20,8 +20,14 @@ export function AdminShell() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user) navigate({ to: "/auth" });
-  }, [loading, user, navigate]);
+    if (loading) return;
+    if (!user) {
+      navigate({ to: "/auth" });
+    } else if (!isAdmin) {
+      toast.error("Admin access required");
+      navigate({ to: "/" });
+    }
+  }, [loading, user, isAdmin, navigate]);
 
   const signOut = async () => {
     await supabase.auth.signOut();

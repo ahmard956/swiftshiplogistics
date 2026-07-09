@@ -7,7 +7,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { STATUS_LABELS, statusBadgeClass } from "@/lib/shipment-utils";
 import { format } from "date-fns";
 
-export const Route = createFileRoute("/admin/customers")({ component: Customers });
+export const Route = createFileRoute("/admin/customers")({
+  head: () => ({ meta: [{ title: "Customers — SwiftShip Admin" }, { name: "robots", content: "noindex, nofollow" }] }),
+  component: Customers,
+});
 
 type Ship = { tracking_number: string; status: string; price: number; customer_email: string | null; to_address: string; updated_at: string };
 

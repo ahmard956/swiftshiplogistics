@@ -10,7 +10,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { supabase } from "@/integrations/supabase/client";
 import { generateTrackingNumber, calculateQuote, SERVICE_LABELS } from "@/lib/shipment-utils";
 
-export const Route = createFileRoute("/admin/new")({ component: NewShipment });
+export const Route = createFileRoute("/admin/new")({
+  head: () => ({ meta: [{ title: "New Shipment — SwiftShip Admin" }, { name: "robots", content: "noindex, nofollow" }] }),
+  component: NewShipment,
+});
 
 const schema = z.object({
   from_address: z.string().trim().min(3).max(255),

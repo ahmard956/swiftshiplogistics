@@ -12,7 +12,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { ALL_STATUSES, STATUS_LABELS, statusBadgeClass } from "@/lib/shipment-utils";
 import { format } from "date-fns";
 
-export const Route = createFileRoute("/admin/tracking")({ component: TrackingAdmin });
+export const Route = createFileRoute("/admin/tracking")({
+  head: () => ({ meta: [{ title: "Tracking Events — SwiftShip Admin" }, { name: "robots", content: "noindex, nofollow" }] }),
+  component: TrackingAdmin,
+});
 
 type Event = {
   id: string;

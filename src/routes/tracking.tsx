@@ -20,7 +20,13 @@ export const Route = createFileRoute("/tracking")({
     meta: [
       { title: "Track Your Package — SwiftShip" },
       { name: "description", content: "Real-time package tracking. Enter your SwiftShip tracking number to see live status updates." },
+      { property: "og:title", content: "Track Your Package — SwiftShip" },
+      { property: "og:description", content: "Real-time package tracking. Enter your SwiftShip tracking number to see live status updates." },
+      { property: "og:url", content: "https://swiftshiplogisticss.lovable.app/tracking" },
+      { name: "twitter:title", content: "Track Your Package — SwiftShip" },
+      { name: "twitter:description", content: "Real-time package tracking. Enter your SwiftShip tracking number to see live status updates." },
     ],
+    links: [{ rel: "canonical", href: "https://swiftshiplogisticss.lovable.app/tracking" }],
   }),
   component: TrackingPage,
 });
@@ -121,7 +127,7 @@ function TrackingPage() {
         {error && (
           <Card className="p-8 text-center">
             <AlertCircle className="mx-auto h-10 w-10 text-destructive" />
-            <h3 className="mt-3 text-lg font-semibold">Tracking not found</h3>
+            <h2 className="mt-3 text-lg font-semibold">Tracking not found</h2>
             <p className="mt-1 text-sm text-muted-foreground">{error}</p>
           </Card>
         )}
@@ -129,7 +135,7 @@ function TrackingPage() {
         {!loading && !error && !shipment && !n && (
           <Card className="p-8 text-center">
             <Package className="mx-auto h-10 w-10 text-muted-foreground" />
-            <h3 className="mt-3 text-lg font-semibold">Enter a tracking number to begin</h3>
+            <h2 className="mt-3 text-lg font-semibold">Enter a tracking number to begin</h2>
             <p className="mt-1 text-sm text-muted-foreground">
               Sample numbers: <span className="font-mono text-primary">SS123456789US</span>, <span className="font-mono text-primary">SS987654321US</span>
             </p>
@@ -162,7 +168,7 @@ function TrackingPage() {
 
             {/* Timeline */}
             <Card className="p-6 lg:col-span-2">
-              <h3 className="text-lg font-semibold">Shipment progress</h3>
+              <h2 className="text-lg font-semibold">Shipment progress</h2>
 
               {/* Progress dots */}
               <div className="mt-6 flex items-center justify-between gap-2">

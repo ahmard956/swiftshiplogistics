@@ -8,7 +8,13 @@ export const Route = createFileRoute("/about")({
     meta: [
       { title: "About SwiftShip Logistics" },
       { name: "description", content: "SwiftShip is a modern American courier reimagining package delivery for the digital age." },
+      { property: "og:title", content: "About SwiftShip Logistics" },
+      { property: "og:description", content: "SwiftShip is a modern American courier reimagining package delivery for the digital age." },
+      { property: "og:url", content: "https://swiftshiplogisticss.lovable.app/about" },
+      { name: "twitter:title", content: "About SwiftShip Logistics" },
+      { name: "twitter:description", content: "SwiftShip is a modern American courier reimagining package delivery for the digital age." },
     ],
+    links: [{ rel: "canonical", href: "https://swiftshiplogisticss.lovable.app/about" }],
   }),
   component: About,
 });

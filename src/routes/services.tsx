@@ -9,7 +9,13 @@ export const Route = createFileRoute("/services")({
     meta: [
       { title: "Shipping Services — SwiftShip" },
       { name: "description", content: "Domestic Express, International Shipping to 220+ countries, and Business Solutions from SwiftShip Logistics." },
+      { property: "og:title", content: "Shipping Services — SwiftShip" },
+      { property: "og:description", content: "Domestic Express, International Shipping to 220+ countries, and Business Solutions from SwiftShip Logistics." },
+      { property: "og:url", content: "https://swiftshiplogisticss.lovable.app/services" },
+      { name: "twitter:title", content: "Shipping Services — SwiftShip" },
+      { name: "twitter:description", content: "Domestic Express, International Shipping to 220+ countries, and Business Solutions from SwiftShip Logistics." },
     ],
+    links: [{ rel: "canonical", href: "https://swiftshiplogisticss.lovable.app/services" }],
   }),
   component: ServicesPage,
 });

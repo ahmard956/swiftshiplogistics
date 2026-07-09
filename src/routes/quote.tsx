@@ -14,7 +14,13 @@ export const Route = createFileRoute("/quote")({
     meta: [
       { title: "Instant Shipping Quote — SwiftShip" },
       { name: "description", content: "Get an instant shipping quote in seconds. Enter origin, destination, and weight." },
+      { property: "og:title", content: "Instant Shipping Quote — SwiftShip" },
+      { property: "og:description", content: "Get an instant shipping quote in seconds. Enter origin, destination, and weight." },
+      { property: "og:url", content: "https://swiftshiplogisticss.lovable.app/quote" },
+      { name: "twitter:title", content: "Instant Shipping Quote — SwiftShip" },
+      { name: "twitter:description", content: "Get an instant shipping quote in seconds. Enter origin, destination, and weight." },
     ],
+    links: [{ rel: "canonical", href: "https://swiftshiplogisticss.lovable.app/quote" }],
   }),
   component: QuotePage,
 });

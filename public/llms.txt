@@ -1,0 +1,14 @@
+# SwiftShip Logistics
+
+> America's modern courier network. Real-time package tracking, instant shipping quotes, and door-to-door delivery to 220+ countries worldwide.
+
+SwiftShip Logistics is a U.S.-based shipping and courier company offering domestic express (overnight and 2-day), international shipping, and business logistics solutions. Customers can track packages by tracking number, get instant quotes without signing up, and contact 24/7 support.
+
+## Pages
+
+- [Home](/): Overview, tracking widget, service highlights, and quote CTA.
+- [Track a package](/tracking): Real-time shipment tracking by tracking number.
+- [Services](/services): Domestic Express, International Shipping, and Business Solutions with features and pricing details.
+- [Instant quote](/quote): Calculator that estimates shipping price and delivery time from origin, destination, weight, and service level.
+- [About](/about): Company background, values, and operating footprint.
+- [Contact](/contact): Phone, email, headquarters address, hours, and contact form.

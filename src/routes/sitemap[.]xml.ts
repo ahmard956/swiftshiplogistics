@@ -1,12 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 
-const BASE_URL = "";
+const BASE_URL = "https://swiftshiplogisticss.lovable.app";
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
+        // /admin/* and /auth are intentionally excluded — they're
+        // disallowed in robots.txt and marked noindex.
         const entries = [
           { path: "/", changefreq: "weekly", priority: "1.0" },
           { path: "/tracking", changefreq: "weekly", priority: "0.9" },

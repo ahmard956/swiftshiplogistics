@@ -9,6 +9,7 @@ import { STATUS_LABELS, statusBadgeClass } from "@/lib/shipment-utils";
 import { formatDistanceToNow } from "date-fns";
 
 export const Route = createFileRoute("/admin/")({
+  head: () => ({ meta: [{ title: "Dashboard — SwiftShip Admin" }, { name: "robots", content: "noindex, nofollow" }] }),
   component: AdminDashboard,
 });
 

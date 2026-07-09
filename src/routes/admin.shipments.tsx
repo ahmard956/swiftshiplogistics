@@ -13,6 +13,7 @@ import { STATUS_LABELS, STATUS_FLOW, ALL_STATUSES, statusBadgeClass } from "@/li
 import { format } from "date-fns";
 
 export const Route = createFileRoute("/admin/shipments")({
+  head: () => ({ meta: [{ title: "Shipments — SwiftShip Admin" }, { name: "robots", content: "noindex, nofollow" }] }),
   component: ShipmentsList,
 });
 

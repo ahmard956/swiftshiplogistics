@@ -17,8 +17,13 @@ export function SiteFooter() {
               Fast, reliable shipping across the USA and 220+ countries worldwide.
             </p>
             <div className="mt-4 flex gap-3">
-              {[Facebook, Twitter, Linkedin, Instagram].map((Icon, i) => (
-                <a key={i} href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              {[
+                { Icon: Facebook, label: "Facebook" },
+                { Icon: Twitter, label: "Twitter" },
+                { Icon: Linkedin, label: "LinkedIn" },
+                { Icon: Instagram, label: "Instagram" },
+              ].map(({ Icon, label }) => (
+                <a key={label} href="#" aria-label={`SwiftShip on ${label}`} className="text-muted-foreground hover:text-primary transition-colors">
                   <Icon className="h-4 w-4" />
                 </a>
               ))}

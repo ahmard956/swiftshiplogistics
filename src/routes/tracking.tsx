@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 import { z } from "zod";
 import { Package, MapPin, Truck, CheckCircle2, AlertCircle, Search, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -43,23 +44,41 @@ function TrackingPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [shipment, setShipment] = useState<Shipment | null>(null);
+  const lastStatus = useRef<string | null>(null);
+  const isInitialLoad = useRef(true);
 
   useEffect(() => {
+    isInitialLoad.current = true;
+    lastStatus.current = null;
     if (n) fetchShipment(n);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [n]);
 
-  async function fetchShipment(tn: string) {
-    setLoading(true);
-    setError(null);
-    setShipment(null);
+  // Poll for status changes every 20s while viewing a shipment.
+  useEffect(() => {
+    if (!n || !shipment) return;
+    const id = setInterval(() => { fetchShipment(n, true); }, 20000);
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [n, shipment?.tracking_number]);
+
+  async function fetchShipment(tn: string, silent = false) {
+    if (!silent) { setLoading(true); setError(null); setShipment(null); }
     const { data, error: e } = await supabase
       .rpc("track_shipment", { _tracking_number: tn.toUpperCase() });
-    setLoading(false);
-    if (e) { setError("Something went wrong. Please try again."); return; }
+    if (!silent) setLoading(false);
+    if (e) { if (!silent) setError("Something went wrong. Please try again."); return; }
     const row = Array.isArray(data) ? data[0] : data;
-    if (!row) { setError(`No shipment found for "${tn.toUpperCase()}". Please check the number and try again.`); return; }
-    setShipment(row as unknown as Shipment);
+    if (!row) { if (!silent) setError(`No shipment found for "${tn.toUpperCase()}". Please check the number and try again.`); return; }
+    const next = row as unknown as Shipment;
+    if (!isInitialLoad.current && lastStatus.current && lastStatus.current !== next.status) {
+      toast.success(`Status updated: ${STATUS_LABELS[next.status] ?? next.status}`, {
+        description: next.current_location ? `Now in ${next.current_location}` : undefined,
+      });
+    }
+    lastStatus.current = next.status;
+    isInitialLoad.current = false;
+    setShipment(next);
   }
 
   const onSubmit = (e: React.FormEvent) => {

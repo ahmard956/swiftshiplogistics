@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 import { Package, Truck, CheckCircle2, DollarSign } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -17,23 +18,63 @@ type Recent = { tracking_number: string; status: string; to_address: string; pri
 function AdminDashboard() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [recent, setRecent] = useState<Recent[]>([]);
+  const statusMap = useRef<Map<string, string>>(new Map());
+
+  const computeAndSet = (data: Array<{ id?: string; status: string; price: number | null; updated_at: string; tracking_number: string; to_address: string }>) => {
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const s: Stats = {
+      active: data.filter((d) => d.status !== "delivered" && d.status !== "returned_to_sender").length,
+      inTransit: data.filter((d) =>
+        ["in_transit", "arrived_hub", "departed_hub", "customs", "arrived_destination", "out_for_delivery", "delivery_attempted"].includes(d.status)
+      ).length,
+      deliveredToday: data.filter((d) => d.status === "delivered" && new Date(d.updated_at) >= today).length,
+      revenue: data.reduce((sum, d) => sum + Number(d.price || 0), 0),
+    };
+    setStats(s);
+    setRecent(data.slice(0, 6) as Recent[]);
+  };
+
+  const load = async () => {
+    const { data } = await supabase
+      .from("shipments")
+      .select("id,status,price,updated_at,tracking_number,to_address")
+      .order("updated_at", { ascending: false });
+    if (!data) return;
+    statusMap.current = new Map(data.map((d) => [d.id as string, d.status]));
+    computeAndSet(data);
+  };
 
   useEffect(() => {
-    (async () => {
-      const { data } = await supabase.from("shipments").select("status,price,updated_at,tracking_number,to_address").order("updated_at", { ascending: false });
-      if (!data) return;
-      const today = new Date(); today.setHours(0, 0, 0, 0);
-      const s: Stats = {
-        active: data.filter((d) => d.status !== "delivered" && d.status !== "returned_to_sender").length,
-        inTransit: data.filter((d) =>
-          ["in_transit", "arrived_hub", "departed_hub", "customs", "arrived_destination", "out_for_delivery", "delivery_attempted"].includes(d.status)
-        ).length,
-        deliveredToday: data.filter((d) => d.status === "delivered" && new Date(d.updated_at) >= today).length,
-        revenue: data.reduce((sum, d) => sum + Number(d.price || 0), 0),
-      };
-      setStats(s);
-      setRecent(data.slice(0, 6) as Recent[]);
-    })();
+    load();
+    const ch = supabase
+      .channel("admin-dashboard-shipments")
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "shipments" },
+        (payload) => {
+          const next = payload.new as { id: string; status: string; tracking_number: string };
+          const prev = statusMap.current.get(next.id);
+          if (prev && prev !== next.status) {
+            toast.success(`${next.tracking_number} → ${STATUS_LABELS[next.status] ?? next.status}`, {
+              description: "Shipment status updated",
+            });
+          }
+          statusMap.current.set(next.id, next.status);
+          load();
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "shipments" },
+        (payload) => {
+          const next = payload.new as { id: string; status: string; tracking_number: string };
+          statusMap.current.set(next.id, next.status);
+          toast(`New shipment ${next.tracking_number} created`);
+          load();
+        },
+      )
+      .subscribe();
+    return () => { supabase.removeChannel(ch); };
   }, []);
 
   const cards = [

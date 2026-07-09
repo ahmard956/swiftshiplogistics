@@ -20,7 +20,13 @@ export const Route = createFileRoute("/tracking")({
     meta: [
       { title: "Track Your Package — SwiftShip" },
       { name: "description", content: "Real-time package tracking. Enter your SwiftShip tracking number to see live status updates." },
+      { property: "og:title", content: "Track Your Package — SwiftShip" },
+      { property: "og:description", content: "Real-time package tracking. Enter your SwiftShip tracking number to see live status updates." },
+      { property: "og:url", content: "https://swiftshiplogisticss.lovable.app/tracking" },
+      { name: "twitter:title", content: "Track Your Package — SwiftShip" },
+      { name: "twitter:description", content: "Real-time package tracking. Enter your SwiftShip tracking number to see live status updates." },
     ],
+    links: [{ rel: "canonical", href: "https://swiftshiplogisticss.lovable.app/tracking" }],
   }),
   component: TrackingPage,
 });

@@ -15,7 +15,36 @@ export const Route = createFileRoute("/contact")({
     meta: [
       { title: "Contact SwiftShip" },
       { name: "description", content: "Get in touch with SwiftShip Logistics. 24/7 support by phone, email, or message." },
+      { property: "og:title", content: "Contact SwiftShip" },
+      { property: "og:description", content: "Get in touch with SwiftShip Logistics. 24/7 support by phone, email, or message." },
+      { property: "og:url", content: "https://swiftshiplogisticss.lovable.app/contact" },
+      { name: "twitter:title", content: "Contact SwiftShip" },
+      { name: "twitter:description", content: "Get in touch with SwiftShip Logistics. 24/7 support by phone, email, or message." },
     ],
+    links: [{ rel: "canonical", href: "https://swiftshiplogisticss.lovable.app/contact" }],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        url: "https://swiftshiplogisticss.lovable.app/contact",
+        name: "Contact SwiftShip",
+        mainEntity: {
+          "@type": "Organization",
+          name: "SwiftShip Logistics",
+          telephone: "+1-800-794-3877",
+          email: "support@swiftship.com",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "1500 Peachtree St NE",
+            addressLocality: "Atlanta",
+            addressRegion: "GA",
+            postalCode: "30309",
+            addressCountry: "US",
+          },
+        },
+      }),
+    }],
   }),
   component: Contact,
 });

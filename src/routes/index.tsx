@@ -14,7 +14,27 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "SwiftShip Logistics — Track, Ship & Deliver" },
       { name: "description", content: "America's modern courier. Track packages in real-time, ship to 220+ countries, and get instant quotes." },
+      { property: "og:title", content: "SwiftShip Logistics — Track, Ship & Deliver" },
+      { property: "og:description", content: "America's modern courier. Track packages in real-time, ship to 220+ countries, and get instant quotes." },
+      { property: "og:url", content: "https://swiftshiplogisticss.lovable.app/" },
+      { name: "twitter:title", content: "SwiftShip Logistics — Track, Ship & Deliver" },
+      { name: "twitter:description", content: "America's modern courier. Track packages in real-time, ship to 220+ countries, and get instant quotes." },
     ],
+    links: [{ rel: "canonical", href: "https://swiftshiplogisticss.lovable.app/" }],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: "SwiftShip Logistics",
+        url: "https://swiftshiplogisticss.lovable.app",
+        potentialAction: {
+          "@type": "SearchAction",
+          target: "https://swiftshiplogisticss.lovable.app/tracking?n={search_term_string}",
+          "query-input": "required name=search_term_string",
+        },
+      }),
+    }],
   }),
   component: Home,
 });
@@ -135,7 +155,7 @@ function Home() {
               <h3 className="mt-5 text-xl font-semibold">{s.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
               <Link to={s.href} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all">
-                Learn more <ArrowRight className="h-4 w-4" />
+                View service details <ArrowRight className="h-4 w-4" />
               </Link>
             </Card>
           ))}

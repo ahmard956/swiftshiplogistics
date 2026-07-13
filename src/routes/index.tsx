@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import {
-  Truck, Globe, Building2, Search, ShieldCheck, Zap, MapPin, Package,
+  Truck, Globe, Building2, Search, ShieldCheck, MapPin, Package,
   ArrowRight, Clock, CheckCircle2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";

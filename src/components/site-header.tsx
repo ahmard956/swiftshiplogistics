@@ -33,7 +33,7 @@ export function SiteHeader() {
               key={n.to}
               to={n.to}
               className="px-3.5 py-1.5 rounded-full text-sm font-medium text-muted-foreground transition-all hover:text-foreground"
-              activeProps={{ className: "text-primary-foreground bg-foreground shadow-soft" }}
+              activeProps={{ className: "text-background bg-foreground shadow-soft" }}
               activeOptions={{ exact: n.to === "/" }}
             >
               {n.label}

@@ -18,22 +18,22 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/70 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link to="/" className="group flex items-center gap-2.5 font-bold text-lg">
-          <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-primary-gradient text-primary-foreground shadow-glow transition-transform group-hover:scale-105">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-xl">
+      <div className="container mx-auto flex h-[68px] items-center justify-between px-4">
+        <Link to="/" className="group flex items-center gap-2.5 text-lg font-bold">
+          <span className="relative flex h-9 w-9 items-center justify-center bg-primary text-primary-foreground transition-colors group-hover:bg-primary/90">
             <Package className="h-5 w-5" strokeWidth={2.4} />
           </span>
-          <span className="text-foreground tracking-tight">SwiftShip</span>
+          <span className="text-foreground">SwiftShip <span className="hidden font-normal text-muted-foreground sm:inline">Logistics</span></span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-0.5 rounded-full border border-border/60 bg-secondary/40 p-1">
+        <nav className="hidden items-center gap-7 md:flex">
           {nav.map((n) => (
             <Link
               key={n.to}
               to={n.to}
-              className="px-3.5 py-1.5 rounded-full text-sm font-medium text-muted-foreground transition-all hover:text-foreground"
-              activeProps={{ className: "text-background bg-foreground shadow-soft" }}
+              className="border-b-2 border-transparent py-6 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              activeProps={{ className: "border-primary text-foreground" }}
               activeOptions={{ exact: n.to === "/" }}
             >
               {n.label}
@@ -42,13 +42,13 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" onClick={toggle} aria-label="Toggle theme" className="rounded-full">
+          <Button variant="ghost" size="icon" onClick={toggle} aria-label="Toggle theme">
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
           <Link to="/quote" className="hidden sm:inline-flex">
-            <Button size="sm" className="rounded-full font-semibold shadow-soft">Get a Quote</Button>
+             <Button size="sm" className="font-semibold">Get a Quote</Button>
           </Link>
-          <Button variant="ghost" size="icon" className="md:hidden rounded-full" onClick={() => setOpen(!open)} aria-label="Menu">
+          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setOpen(!open)} aria-label="Menu">
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
         </div>
